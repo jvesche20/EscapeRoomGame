@@ -19,7 +19,8 @@ public class BedDresserRaycast : MonoBehaviour
     [SerializeField] private Image crosshair = null;
     private bool isCrosshairActive;
     private bool doOnce;
-
+    private int opened = 0;
+    public GameObject ui;
     private const string interactableTag = "InteractiveObject";
 
     private void Update()
@@ -45,6 +46,14 @@ public class BedDresserRaycast : MonoBehaviour
                 if (Input.GetKeyDown(openDresser))
                 {
                     raycasted_obj.PlayAnimation();
+                    opened++;
+                }
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    if (opened % 2 == 1)
+                    {
+                        Toggle();
+                    }
                 }
             }
         }
@@ -58,7 +67,10 @@ public class BedDresserRaycast : MonoBehaviour
             }
         }
     }
-
+    public void Toggle()
+    {
+        ui.SetActive(!ui.activeSelf);
+    }
     void CrosshairChange(bool on)
     {
         if (on && !doOnce)
